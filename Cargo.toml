@@ -1,0 +1,6 @@
+[package]
+name = "check-project"
+version = "0.1.0"
+authors = [" <>"]
+
+[dependencies]

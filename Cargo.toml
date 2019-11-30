@@ -5,6 +5,7 @@ edition = "2018"
 authors = ["Phil <PhilboBaggins@users.noreply.github.com>"]
 
 [dependencies]
-clap = "2.32.0"
-cargo_toml = "0.3.0"
-rust-ini = "0.12.2"
+clap = "2.33.0"
+cargo_toml = "0.8.0"
+rust-ini = "0.13.0"
+toml = "0.5.5"

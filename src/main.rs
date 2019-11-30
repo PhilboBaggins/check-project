@@ -1,10 +1,10 @@
 extern crate cargo_toml;
-//extern crate toml;
+extern crate toml;
 extern crate clap;
 extern crate ini;
 
 use std::fs;
-use cargo_toml::TomlManifest;
+use cargo_toml::Manifest;
 use std::fs::read;
 use clap::{App, Arg};
 use std::path::Path;
@@ -21,7 +21,8 @@ mod tests {
 
 fn check_cargo_project(proj_path: &str, verbose: u64) {
     let cargo_toml_path = Path::new(proj_path).join("Cargo.toml");
-    let cargo_toml_data = TomlManifest::from_slice(&read(cargo_toml_path).unwrap()).unwrap();
+    let cargo_toml_data = Manifest::<toml::Value>::from_slice_with_metadata(&read(cargo_toml_path).unwrap()).unwrap();
+    let cargo_toml_package = cargo_toml_data.package.as_ref().unwrap();
 
     let git_config_path = Path::new(proj_path).join(".git").join("config");
     if let Ok(conf) = Ini::load_from_file(git_config_path) {
@@ -31,7 +32,7 @@ fn check_cargo_project(proj_path: &str, verbose: u64) {
             println!("URL: {}", section.get("url").unwrap());
         }
 
-        if let Some(repo_path) = cargo_toml_data.package.repository {
+        if let Some(repo_path) = &cargo_toml_package.repository {
             println!("repo_path: {}", repo_path);
         }
     }
